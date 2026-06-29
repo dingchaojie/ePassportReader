@@ -359,8 +359,9 @@ abstract class MainActivity : AppCompatActivity() {
                         "Passive auth hash mismatch: DG1=$dg1HashMatches, DG2=$dg2HashMatches, " +
                             "DG14=$dg14HashMatches, SOD data groups=${dataHashes.keys}",
                     )
-                    if (isTrumpDemoCard() && chipAuthSucceeded && sodSignatureValid) {
-                        Log.w(TAG, "Accepting passive authentication for Trump demo card with stale EF.SOD hashes")
+                    val labDemoProfile = labDemoProfileName()
+                    if (labDemoProfile != null && chipAuthSucceeded && sodSignatureValid) {
+                        Log.w(TAG, "Accepting passive authentication for $labDemoProfile lab card with stale EF.SOD hashes")
                         passiveAuthSuccess = true
                     }
                 }
@@ -429,11 +430,22 @@ abstract class MainActivity : AppCompatActivity() {
             }
         }
 
-        private fun isTrumpDemoCard(): Boolean {
+        private fun labDemoProfileName(): String? {
             val mrzInfo = dg1File.mrzInfo
-            return mrzInfo.documentNumber == "USA000080" &&
-                mrzInfo.primaryIdentifier.replace("<", " ").trim() == "TRUMP" &&
-                mrzInfo.secondaryIdentifier.replace("<", " ").trim() == "DONALD J"
+            val primaryIdentifier = mrzInfo.primaryIdentifier.replace("<", " ").trim()
+            val secondaryIdentifier = mrzInfo.secondaryIdentifier.replace("<", " ").trim()
+
+            return when {
+                mrzInfo.documentNumber == "USA000080" &&
+                    primaryIdentifier == "TRUMP" &&
+                    secondaryIdentifier == "DONALD J" -> "Trump"
+
+                mrzInfo.documentNumber == "PRK000081" &&
+                    primaryIdentifier == "KIM" &&
+                    secondaryIdentifier == "JONG UN" -> "Kim Jong Un"
+
+                else -> null
+            }
         }
 
         override fun onPostExecute(result: Exception?) {
