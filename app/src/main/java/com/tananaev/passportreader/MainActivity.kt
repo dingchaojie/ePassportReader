@@ -394,10 +394,9 @@ abstract class MainActivity : AppCompatActivity() {
                         keystore.setCertificateEntry(i.toString(), javaCertificate)
                     }
                 }
-                val testCsca = Base64.decode(TEST_CSCA_CERT_BASE64, Base64.DEFAULT)
                 keystore.setCertificateEntry(
                     "epassport-test-csca",
-                    cf.generateCertificate(ByteArrayInputStream(testCsca)),
+                    cf.generateCertificate(assets.open("test_csca.cer")),
                 )
 
                 val docSigningCertificates = sodFile.docSigningCertificates
@@ -443,6 +442,10 @@ abstract class MainActivity : AppCompatActivity() {
                 mrzInfo.documentNumber == "PRK000081" &&
                     primaryIdentifier == "KIM" &&
                     secondaryIdentifier == "JONG UN" -> "Kim Jong Un"
+
+                mrzInfo.documentNumber == "CHN000082" &&
+                    primaryIdentifier == "ZHAO" &&
+                    secondaryIdentifier == "BENSHAN" -> "Zhao Benshan"
 
                 else -> null
             }
@@ -536,7 +539,5 @@ abstract class MainActivity : AppCompatActivity() {
         private const val KEY_PASSPORT_NUMBER = "passportNumber"
         private const val KEY_EXPIRATION_DATE = "expirationDate"
         private const val KEY_BIRTH_DATE = "birthDate"
-        private const val TEST_CSCA_CERT_BASE64 =
-            "MIIDXjCCAkagAwIBAgIBATANBgkqhkiG9w0BAQsFADBAMRwwGgYDVQQDDBNlUGFzc3BvcnQgVGVzdCBDU0NBMRMwEQYDVQQKDApPcGVuQUkgTGFiMQswCQYDVQQGEwJDTjAeFw0yNjA2MjQwNjU1MDFaFw0zNjA2MjIwNjU1MDFaMEAxHDAaBgNVBAMME2VQYXNzcG9ydCBUZXN0IENTQ0ExEzARBgNVBAoMCk9wZW5BSSBMYWIxCzAJBgNVBAYTAkNOMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzTNnN2EwxxlLEHalPghtTO4L+nxrQTsA87Z7AqcJc15n/X7aHuU2tKdipiOWGdaFntbEpEUdV1u80TIfF5kGu4D6s0hvFrq8WDKAZMdOcQPscr5t5OfglAxCbB6RAB/o9bHLc7Ql0cvTH8d3PFl7k0Il1ePgqrGn80eKzEcK3U5rEs45M9PrENiEbqK+6aIaPy36vBYtuU/f8SkVbcTtkoRoskjyRcaX+KRE+jq1mraVxm+dR6RFvornNTONERLLIoIea/d8iT+LIl1GcuDOUpER88VdGY4orkVVIM0DAy4jE1+ezjcna0ndUrqN7zVcFu+bEzLAoOfkqOcAmqGH1QIDAQABo2MwYTAdBgNVHQ4EFgQUPclZY1HhdwHpUp5qpHVbYZr69W4wHwYDVR0jBBgwFoAUPclZY1HhdwHpUp5qpHVbYZr69W4wDwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAQYwDQYJKoZIhvcNAQELBQADggEBABdvQBieHf0ZeRcuVIJ46zKwwS5foinKGfBijWEFm/x8disPX/HvPaZTph4bGXJSM77hlyCb6yrbQLSl/1oxB4G+5JljU1ypacJndTE2tIGyiKrdd9clkswUfAMbQ82MYPMkblPREH9KESnYtqyn6Aw1skvLvhK7R6kcC/OpxIWrCl1BNUUoPfuKxV12YHqOgUZWeBftbuF9PvP/NXsBNV5hwHXCInZINcqGEiVzrcb/h1z4Jr81HLOfTgULFsRcaeJBnUncR3sfSBf71Xs1DmTnhiD6mZtsM6p9rpJfaHAzz1EdofVQlTAc1lE5pN0DCGg8i4l/F8S4iw9e7Sqm0Dk="
     }
 }
