@@ -1,6 +1,6 @@
 [libraries]
 material = "com.google.android.material:material:1.13.0"
-androidx-core-ktx = "androidx.core:core-ktx:1.18.0"
+androidx-core-ktx = "androidx.core:core-ktx:1.19.0"
 materialdatetimepicker = "com.wdullaer:materialdatetimepicker:4.2.3"
 jmrtd = "org.jmrtd:jmrtd:0.7.18"
 scuba-sc-android = "net.sf.scuba:scuba-sc-android:0.0.18"
